@@ -1,4 +1,5 @@
 import os
+import json
 from flask import Flask, render_template  #import the flask app, and the render_template()function.
 
 app = Flask(__name__)  #then create an instance of this and storing it in the variable app. The argument __name__ is a built in python variable.
@@ -9,7 +10,10 @@ def index():
     
 @app.route('/about')
 def about():
-    return render_template('about.html', page_title="About")
+    data = []
+    with open("data/company.json", "r") as json_data:
+        data = json.load(json_data)
+    return render_template('about.html', page_title="About", company_data=data)
     
 @app.route('/contact')
 def contact():
