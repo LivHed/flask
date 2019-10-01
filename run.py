@@ -1,6 +1,6 @@
 import os
 import json
-from flask import Flask, render_template  #import the flask app, and the render_template()function.
+from flask import Flask, render_template, request  #import the flask app, and the render_template()function, and the request library from Flask.
 
 app = Flask(__name__)  #then create an instance of this and storing it in the variable app. The argument __name__ is a built in python variable.
 
@@ -27,8 +27,10 @@ def about_member(member_name):
                 
     return render_template("member.html", member=member)
     
-@app.route('/contact')
+@app.route('/contact', methods=["GET", "POST"])
 def contact():
+    if request.method == "POST":
+        print(request.form)
     return render_template("contact.html", page_title="Contact")
     
 @app.route('/careers')
