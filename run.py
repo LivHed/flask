@@ -1,8 +1,9 @@
 import os
 import json
-from flask import Flask, render_template, request  #import the flask app, and the render_template()function, and the request library from Flask.
+from flask import Flask, render_template, request, flash  #import the flask app, and the render_template()function, the request library from Flask, and the flash function.
 
 app = Flask(__name__)  #then create an instance of this and storing it in the variable app. The argument __name__ is a built in python variable.
+app.secret_key = 'some_secret'  
 
 @app.route('/')   #the @ sign, the decorator (pie notation), is a way of wrapping functions.
 def index():
@@ -30,7 +31,9 @@ def about_member(member_name):
 @app.route('/contact', methods=["GET", "POST"])
 def contact():
     if request.method == "POST":
-        print(request.form)
+        flash("Thanks {}, we have received your message".format(
+             request.form["name"]
+        ))
     return render_template("contact.html", page_title="Contact")
     
 @app.route('/careers')
